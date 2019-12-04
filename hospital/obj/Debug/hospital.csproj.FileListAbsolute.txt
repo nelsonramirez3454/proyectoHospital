@@ -1,0 +1,4 @@
+C:\Users\Aprendiz\source\repos\hospital\hospital\obj\Debug\hospital.csprojAssemblyReference.cache
+C:\Users\Aprendiz\source\repos\hospital\hospital\obj\Debug\hospital.Form1.resources
+C:\Users\Aprendiz\source\repos\hospital\hospital\obj\Debug\hospital.Properties.Resources.resources
+C:\Users\Aprendiz\source\repos\hospital\hospital\obj\Debug\hospital.csproj.GenerateResource.cache
