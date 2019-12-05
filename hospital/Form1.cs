@@ -54,7 +54,35 @@ namespace hospital
 
         private void button1_Click(object sender, EventArgs e)
         {
+			_Manager.Delete(int.Parse(textBoxId.Text));
+			btnlistarPaciente_Click(this, new EventArgs());
+			LimpiarTexto();
+		}
 
-        }
-    }
+		private void btnActualizarPaciente_Click(object sender, EventArgs e)
+		{
+			Paciente paciente = new Paciente()
+			{
+				ID = int.Parse(textBoxId.Text),
+				NumSeguridadSocial = textBoxNum.Text,
+				CI = textBoxDocumento.Text,
+				Nombre = textBoxNombre.Text,
+				Apellido = textBoxApellido.Text,
+				FechaNacimiento = textBoxFecha.Text,
+			};
+			_Manager.Update(paciente);
+			btnlistarPaciente_Click(this, new EventArgs());
+			LimpiarTexto();
+		}
+
+		private void lstPaciente_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxId_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

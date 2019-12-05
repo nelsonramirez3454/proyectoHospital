@@ -37,8 +37,8 @@ namespace hospital
                                 CI = dr["ci"].ToString(),
                                 Nombre = dr["nombre"].ToString(),
                                 Apellido = dr["apellido"].ToString(),
-                                FechaNacimiento = DateTime.Parse("fechaNacimiento"),
-                              
+                                FechaNacimiento = dr["fechaNacimiento"].ToString(),
+
                             });
                         }
                     }
@@ -47,7 +47,77 @@ namespace hospital
             }
             return pacientes;
         }
-    }
+		public void Write(Paciente paciente)
+		{
+			using (IDbConnection conn = CreateConnection())
+			{
+				using (IDbCommand cmd = conn.CreateCommand())
+				{
+
+					cmd.CommandText = "INSERT INTO Pacientes (numSeguridadSocial, ci, nombre, apellido, fechaNacimiento) VALUES (@numSeguridadSocial, @ci, @nombre, @apellido, @fechaNacimiento)";
+
+					CreateParameter(cmd, "numSeguridadSocial", paciente.NumSeguridadSocial);
+					CreateParameter(cmd, "ci", paciente.CI);
+					CreateParameter(cmd, "nombre", paciente.Nombre);
+					CreateParameter(cmd, "apellido", paciente.Apellido);
+					CreateParameter(cmd, "fechaNacimiento", paciente.FechaNacimiento);
+
+					cmd.ExecuteNonQuery();
+
+			
+
+					/*cmd.CommandText = "INSERT INTO logs(action, createDate) VALUES(@action, @createDate)";
+					CreateParameter(cmd, "action", "New student created");
+					CreateParameter(cmd, "createDate", DateTime.Now);
+					cmd.ExecuteNonQuery();*/
+				}
+
+			}
+		}
+
+
+		public void Update(Paciente paciente)
+		{
+			using (IDbConnection conn = CreateConnection())
+			{
+				using (IDbCommand cmd = conn.CreateCommand())
+				{
+					cmd.CommandText = "UPDATE Pacientes SET NumSeguridadSocial=@numSeguridadSocial, CI=@ci, Nombre=@nombre, Apellido=@apellido WHERE idPaciente=@idPaciente";
+
+					CreateParameter(cmd, "idPaciente", paciente.ID);
+					CreateParameter(cmd, "numSeguridadSocial", paciente.NumSeguridadSocial);
+					CreateParameter(cmd, "ci", paciente.CI);
+					CreateParameter(cmd, "nombre", paciente.Nombre);
+					CreateParameter(cmd, "apellido", paciente.Apellido);
+					CreateParameter(cmd, "fechaNacimiento", paciente.FechaNacimiento);
+
+					cmd.ExecuteNonQuery();
+				}
+			}
+		}
+
+		public void Delete(int ID)
+		{
+			using (IDbConnection conn = CreateConnection())
+			{
+				using (IDbCommand cmd = conn.CreateCommand())
+				{
+					cmd.CommandText = "DELETE FROM Pacientes WHERE idPaciente=@idPaciente";
+					CreateParameter(cmd, "idPaciente", ID);
+					cmd.ExecuteNonQuery();
+				}
+			}
+		}
+		private void CreateParameter<T>(IDbCommand cmd, string name, T value)
+		{
+			IDbDataParameter prm = cmd.CreateParameter();
+			prm.ParameterName = name;
+			prm.Value = value;
+			cmd.Parameters.Add(prm);
+		}
+
+		
+	}
 }
 
        
